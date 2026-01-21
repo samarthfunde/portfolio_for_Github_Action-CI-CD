@@ -10,11 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout repository code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Configure AWS credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -22,7 +20,5 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      # Step 3: Deploy static website to S3
       - name: Deploy static site to S3
-        run: |
-          aws s3 sync . s3://samarth-portfolio-bucket --delete
+        run: aws s3 sync . s3://samarth-portfolio-bucket --delete

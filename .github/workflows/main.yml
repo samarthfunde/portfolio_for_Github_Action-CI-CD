@@ -1,23 +1,24 @@
 name: Samarth Portfolio Deployment
 
-on: 
+on:
   push:
     branches:
       - master
 
 jobs:
-  deploy-my-portfolio: 
-      runs-on: ubuntu-latest
-      steps:
-        - name:  Checkout
-          uses: actions/checkout@v1
+  deploy-my-portfolio:
+    runs-on: ubuntu-latest
 
-        - name: Configure AWS Credentials
-          uses: aws-actions/conf/igure-aws-credentials@v1
-          with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: ap-south-1
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-         - name: Deploy static site to s3 bucket
-           run: aws s3 sync . s3://samarth-portfolio-bucket --delete
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Deploy static site to S3
+        run: aws s3 sync . s3://samarth-portfolio-bucket --delete
